@@ -1,0 +1,6 @@
+[test]
+name=test
+baseurl=http://localhost:9381/ambari/test/centos7
+gpgcheck=0
+enabled=1
+
