@@ -1,0 +1,4 @@
+        if ($request_filename ~* .*\.(?:js|css|jpg|jpeg|gif|png|ico|ogg|svg)$)
+        {
+            expires      1d;
+        }

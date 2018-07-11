@@ -10,7 +10,7 @@ fi
 
 echo "挂载centos7的iso文件到ambari yum目录"
 set +e
-#mount ./bigfile/centos7_iso/CentOS-7-x86_64-DVD-1708.iso ./ambari/centos/centos7/ -t iso9660 -o loop
+mount ./bigfile/centos7_iso/CentOS-7-x86_64-DVD-1708.iso ./ambari/centos/centos7/ -t iso9660 -o loop
 set -e
 
 echo "安装并启动yum源..."
@@ -20,20 +20,18 @@ sed  's/localhost/'$1'/g' tool/install/bk/ambari.repo_bk > tool/install/ambari.r
 
 CHECK01=`netstat -anlupt |grep '0.0.0.0:9381' |grep -v grep |wc -l` &> /dev/null
 
-
-
 if [ -f /etc/yum.repos.d/ambari.repo ];then
 	rm -rf /etc/yum.repos.d/ambari.repo
 fi
 
-# if [ -d /etc/yum.repos.d/bk ];then
-# 	rm -rf /etc/yum.repos.d/bk
-# fi
+if [ -d /etc/yum.repos.d/bk ];then
+	rm -rf /etc/yum.repos.d/bk
+fi
 
-# mkdir /etc/yum.repos.d/bk
-# if ls /etc/yum.repos.d/*.repo >/dev/null 2>&1;then
-# 	mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/bk/
-# fi
+mkdir /etc/yum.repos.d/bk
+if ls /etc/yum.repos.d/*.repo >/dev/null 2>&1;then
+	mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/bk/
+fi
 
 cp ./tool/install/ambari.repo /etc/yum.repos.d/
 
@@ -45,7 +43,7 @@ else
 fi
 
 yum clean all
-echo "yum install wget -y -d 0 -e 0"
+echo "yum install ark-canary-web -y -d 0 -e 0"
 yum install ark-canary-web -y -d 0 -e 0
 
 set +e
